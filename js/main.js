@@ -1,24 +1,32 @@
 const app = Vue.createApp({
   data: () => ({
     items: [], // APIから取得した検索結果
-    keyword: '', // ユーザーが入力した検索キーワード
-    message: ''  // ユーザーに表示するメッセージ
+    keyword: "", // ユーザーが入力した検索キーワード
+    message: "", // ユーザーに表示するメッセージ
+    PopularClass: {
+      "text-red": true,
+      "bg-yellow": true,
+    },
+    styleObject: {
+      color: 'blue',
+      fontSize: '24px'
+    }
   }),
   watch: {
-    keyword: function(newKeyword, oldKeyword) {
-      this.message = 'Typing now...'
-      this.deboucedGetAnswer()
-    }
+    keyword: function (newKeyword, oldKeyword) {
+      this.message = "Typing now...";
+      this.deboucedGetAnswer();
+    },
   },
   // ビューインスタンスがマウントされた後に呼ばれる
-  mounted: function() {
+  mounted: function () {
     // 指定時間内に同じイベントが発生すると処理が発生しない
     // ユーティリティライブラリのlodashのdebounce関数
     this.deboucedGetAnswer = _.debounce(this.getAnswer, 1000);
   },
   computed: {
     // いいね数順にソートされた配列を提供する算出プロパティ
-    sortedItems: function() {
+    sortedItems: function () {
       // sliceで元の配列をコピー
       // sortメソッド:アロー関数を使用して定義
       // 比較関数が正の値の時はbはaの前に来る
@@ -26,7 +34,7 @@ const app = Vue.createApp({
     },
   },
   methods: {
-    getAnswer: function() {
+    getAnswer: function () {
       //
       if (this.keyword === "") {
         this.items = null;
@@ -54,7 +62,7 @@ const app = Vue.createApp({
         .finally(function () {
           vm.message = "";
         });
-    }
-  }
+    },
+  },
 });
 app.mount("#app");

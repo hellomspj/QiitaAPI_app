@@ -12,14 +12,23 @@
       <input type="text" v-model="keyword">
     </p>
     <p>{{ message }}</p>
+    <p>
+      <!--インラインスタイルのデータバインディング-->
+      <span v-bind:style="styleObject">
+        検索結果
+      </span>
+    </p>
     <ul><!--箇条書き-->
       <li v-for="item in sortedItems" :key="item.id">
         <!--target=_blank: 常に名前無しのウィンドウを新規に開いて表示します-->
         <a v-bind:href="item.url" target="_blank">
           {{ item.title }}
         </a>
+        <!--クラスのデータバインディング/三項演算子-->
+        <span v-bind:class="item.likes_count > 5 ? PopularClass: ''">
         <!--いいね数の表示-->
-        likes: {{ item.likes_count }}
+          likes: {{ item.likes_count }}
+        </span>
       </li>
     </ul>
   </div>
