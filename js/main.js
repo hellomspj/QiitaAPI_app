@@ -1,6 +1,6 @@
 const app = Vue.createApp({
   data: () => ({
-    items: null, // APIから取得した検索結果
+    items: [], // APIから取得した検索結果
     keyword: '', // ユーザーが入力した検索キーワード
     message: ''  // ユーザーに表示するメッセージ
   }),
@@ -16,6 +16,15 @@ const app = Vue.createApp({
     // ユーティリティライブラリのlodashのdebounce関数
     this.deboucedGetAnswer = _.debounce(this.getAnswer, 1000);
   },
+  computed: {
+    // いいね数順にソートされた配列を提供する算出プロパティ
+    sortedItems: function() {
+      // sliceで元の配列をコピー
+      // sortメソッド:アロー関数を使用して定義
+      // 比較関数が正の値の時はbはaの前に来る
+      return this.items.slice().sort((a, b) => b.likes_count - a.likes_count);
+    },
+  },
   methods: {
     getAnswer: function() {
       //
@@ -28,7 +37,7 @@ const app = Vue.createApp({
       // page: 検索ページ何ページ目か、
       // per_page: 1ページあたりの件数
       // query: 検索クエリ(https://help.qiita.com/ja/articles/qiita-search-options)
-      const params = { page: 1, per_page: 20, query: this.keyword };
+      const params = { page: 1, per_page: 30, query: this.keyword };
       // axiosを使ってAPIを叩く (axiosのルールに則った記述)
       axios
         .get("https://qiita.com/api/v2/items", { params })

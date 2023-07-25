@@ -13,7 +13,7 @@
     </p>
     <p>{{ message }}</p>
     <ul><!--箇条書き-->
-      <li v-for="item in items">
+      <li v-for="item in sortedItems" :key="item.id">
         <!--target=_blank: 常に名前無しのウィンドウを新規に開いて表示します-->
         <a v-bind:href="item.url" target="_blank">
           {{ item.title }}
